@@ -1,0 +1,30 @@
+body, html {
+    /* Begin: the page's height initialization to show scrollbars */
+    height: calc(100vh * 9);
+    min-height: calc(100vh * 9);
+    /* End: the page's height initialization to show scrollbars */
+}
+
+#scene {
+    background: #354462;
+}
+
+#block {
+    background: #D1CE71;
+}
+
+.display {
+    width: 100vw;
+    height: 100vh;
+    background: #273742;
+}
+
+/*::-webkit-scrollbar {*/
+/*    -webkit-appearance: none;*/
+/*    width: 7px;*/
+/*}*/
+
+/*::-webkit-scrollbar-thumb {*/
+/*    background-color: rgba(0, 0, 0, .5);*/
+/*    box-shadow: 0 0 1px rgba(255, 255, 255, .5);*/
+/*}*/

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lib-spec/",
+    "module": "CommonJS",
+    "target": "ES5",
+    "sourceMap": true,
+    "types": [
+      "jasmine",
+      "node"
+    ]
+  },
+  "include": [
+    "./src/specs/**/*",
+    "./src/lib/**/*"
+  ]
+}
