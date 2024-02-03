@@ -1,0 +1,61 @@
+{
+  "name": "ballet",
+  "version": "0.0.1",
+  "private": false,
+  "description": "The typescript library for scroll animation",
+  "main": "lib/index.umd.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "/lib/**/*"
+  ],
+  "scripts": {
+    "start": "npm run watch",
+    "test": "karma start --browsers Chrome",
+    "test:no-browser": "karma start --browsers ChromeHeadless --single-run",
+    "lint": "npx eslint .",
+    "clear:lib": "rm -rf ./lib",
+    "build": "npm run clear:lib && webpack --mode production",
+    "build:dev": "npm run clear:lib && webpack --mode development",
+    "watch": "webpack --watch --mode development",
+    "watch:prod": "webpack --watch --mode production",
+    "tsc:lib": "tsc --project tsconfig.lib.json",
+    "tsc:test": "tsc --project tsconfig.spec.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drKaramazin/ballet.git"
+  },
+  "keywords": [
+    "animation",
+    "scroll",
+    "effects",
+    "typescript"
+  ],
+  "author": "Nikolay Grishkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drKaramazin/ballet/issues"
+  },
+  "homepage": "https://github.com/drKaramazin/ballet#readme",
+  "devDependencies": {
+    "@types/jasmine": "~4.3.1",
+    "@typescript-eslint/eslint-plugin": "~5.41.0",
+    "eslint": "~8.26.0",
+    "eslint-config-standard-with-typescript": "~23.0.0",
+    "eslint-plugin-import": "~2.26.0",
+    "eslint-plugin-n": "~15.3.0",
+    "eslint-plugin-promise": "~6.1.1",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.2",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-typescript": "~5.5.4",
+    "karma-typescript-es6-transform": "~5.5.4",
+    "ts-loader": "~9.2.7",
+    "typescript": "~4.8.4",
+    "webpack": "~5.70.0",
+    "webpack-cli": "~4.9.2",
+    "webpack-dev-server": "~4.7.4"
+  }
+}

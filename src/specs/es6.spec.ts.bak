@@ -1,0 +1,31 @@
+import { StickyPlatformScene, Ballet } from '../lib/index.es';
+
+describe("Init test", function() {
+    let sceneElement: HTMLElement;
+    let scene: unknown;
+    let sr: unknown;
+
+    beforeEach(function () {
+        const fixture = `
+            <div id="scene">
+                <div id="block"></div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', fixture);
+
+        sceneElement = document.getElementById('scene');
+
+        scene = new StickyPlatformScene(
+            sceneElement,
+            (w: number, h: number) => h,
+        );
+
+        sr = new Ballet(scene);
+    });
+
+    afterEach(function () {
+        document.body.removeChild(document.getElementById('scene'));
+    });
+
+});
