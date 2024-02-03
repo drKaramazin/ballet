@@ -5,7 +5,7 @@ The typescript library for scroll animation.
 
 ## Examples
 
-[Click here to see all the examples](https://drkaramazin.github.io/ballet.site/)
+[Click here to see all the examples](https://drkaramazin.github.io/ballet-site/)
 
 ## Module System Types
 
@@ -21,7 +21,7 @@ const scene = new StickyPlatformScene(
     (w, h) => h * 2,
 );
 ```
-Here is [an example](https://drkaramazin.github.io/ballet.site/fixed-actors-scene-demo.html) of using this method.
+Here is [an example](https://drkaramazin.github.io/ballet-site/fixed-actors-scene-demo.html) of using this method.
 
 - StickyPlatformScene
 ```
@@ -30,7 +30,7 @@ const scene = new StickyPlatformScene(
     (w, h) => h * 2,
 );
 ```
-This method also has an _offset_ and _stickyPlatformHeight_ options. To see an example of using these options [click here](https://drkaramazin.github.io/ballet.site/sticky-platform-scene-demo.html).
+This method also has an _offset_ and _stickyPlatformHeight_ options. To see an example of using these options [click here](https://drkaramazin.github.io/ballet-site/sticky-platform-scene-demo.html).
 
 ## Motions
 - MoveMotion
