@@ -41,4 +41,14 @@ export class BoundMotion extends Motion {
     }
   }
 
+  turnOff(element: HTMLElement): void {
+    const allProperties = Object.keys({
+      ...this.before(Util.clientWidth(), Util.clientHeight()),
+      ...this.after(Util.clientWidth(), Util.clientHeight()),
+    });
+    for (const property of allProperties) {
+      element.style.removeProperty(property);
+    }
+  }
+
 }

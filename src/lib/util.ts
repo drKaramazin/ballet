@@ -26,14 +26,14 @@ export class Util {
   /**
    * @returns The interior width of the browser window in pixels. This includes the width of the vertical scrollbar, if one is present.
    */
-  static innerWidth(): number {
+  static viewportWidth(): number {
     return window.innerWidth;
   }
 
   /**
    * @returns The interior height of the browser window in pixels. This includes the height of the horizontal scrollbar, if one is present.
    */
-  static innerHeight(): number {
+  static viewportHeight(): number {
     return window.innerHeight;
   }
 
@@ -66,8 +66,8 @@ export class Util {
     return {
       clientWidth: this.clientWidth(),
       clientHeight: this.clientHeight(),
-      innerWidth: this.innerWidth(),
-      innerHeight: this.innerHeight(),
+      viewportWidth: this.viewportWidth(),
+      viewportHeight: this.viewportHeight(),
       documentHeight: this.documentHeight(),
     };
   }

@@ -10,4 +10,6 @@ export class DummyMotion extends Motion {
 
   override make(params: MotionParams): void {}
 
+  turnOff(element: HTMLElement): void {}
+
 }

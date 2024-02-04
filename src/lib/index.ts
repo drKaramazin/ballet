@@ -23,3 +23,6 @@ export { OpacityMotion } from './motions/opacity.motion';
 export { BoundMotion, BoundValue } from './motions/bound.motion';
 
 export { MeasuringGridModel } from './models/measuring-grid.model';
+
+export { WindowSizesModel } from './models/window-sizes.model';
+export { ResolutionModel } from './models/resolution.model';

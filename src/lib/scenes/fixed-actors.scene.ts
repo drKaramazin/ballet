@@ -12,20 +12,34 @@ export class FixedActorsScene extends Scene<SceneOptions> {
   }
 
   override resizeHeight(): void {
-    this.element.style.height = `${this.height(Util.clientWidth(), Util.clientHeight())}px`;
+    if (this.checkResolution()) {
+      this.element.style.height = `${this.height(Util.clientWidth(), Util.clientHeight())}px`;
+    }
   }
 
-  protected override init(): void {
+  protected override turnOn(): void {
     this.element.style.position = 'relative';
+
+    this.placeAllActors();
   }
 
-  override add(actor: Actor): void {
-    super.add(actor);
-    actor.element!.style.position = 'fixed';
-    actor.initElement(this.elementY(), this);
+  protected turnOff(): void {
+    this.actors.forEach(actor => {
+      actor.turnOff();
+      actor.element?.style.removeProperty('position');
+    });
+
+    this.element.style.removeProperty('position');
   }
 
-  interceptY(y: number, params: MotionParams): number {
+  protected placeActor(actor: Actor): void {
+    if (this.checkResolution()) {
+      actor.element!.style.position = 'fixed';
+      actor.initElement(this.elementY(), this);
+    }
+  }
+
+  override interceptY(y: number, params: MotionParams): number {
     if (params.scrollPosOnScene < 0) {
       return y - params.scrollPosOnScene;
     }

@@ -9,5 +9,6 @@ export abstract class Motion {
   }
 
   abstract make(params: MotionParams): void;
+  abstract turnOff(element: HTMLElement): void;
 
 }
