@@ -105,7 +105,7 @@ export class Ballet {
       }
       this.scene.turnOffScene();
     } else {
-      throw new Error('Scroll-Rise hasn\'t yet been initialized');
+      throw new Error('Ballet hasn\'t yet been initialized');
     }
   }
 
