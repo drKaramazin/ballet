@@ -64,4 +64,9 @@ export class MoveMotion extends FramedMotion {
     this.setTop(params, y);
   }
 
+  turnOff(element: HTMLElement): void {
+    element.style.removeProperty('left');
+    element.style.removeProperty('top');
+  }
+
 }

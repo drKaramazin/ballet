@@ -42,4 +42,8 @@ export class OpacityMotion extends FramedMotion {
     this.setOpacity(params, opacity);
   }
 
+  turnOff(element: HTMLElement): void {
+    element.style.removeProperty('opacity');
+  }
+
 }

@@ -24,15 +24,17 @@ export class StickyPlatformScene extends Scene<StickyPlatformSceneOptions> {
   }
 
   override resizeHeight(): void {
-    this.element.style.height = `${this.height(Util.clientWidth(), Util.clientHeight())}px`;
-    this.resizePlatform();
+    if (this.checkResolution()) {
+      this.element.style.height = `${this.height(Util.clientWidth(), Util.clientHeight())}px`;
+      this.resizePlatform();
+    }
   }
 
   resizePlatform(): void {
     this.platform.style.height = `${this.platformHeightValue()}px`;
   }
 
-  protected override init(): void {
+  protected override turnOn(): void {
     this.element.style.position = 'relative';
     this.element.style.overflow = 'visible';
 
@@ -41,17 +43,38 @@ export class StickyPlatformScene extends Scene<StickyPlatformSceneOptions> {
     this.platform.style.top = '0';
     this.platform.style.left = '0';
     this.platform.style.width = '100%';
+    this.platform.style.overflow = 'hidden';
 
     this.element.appendChild(this.platform);
+
+    this.placeAllActors();
   }
 
-  override add(actor: Actor): void {
-    super.add(actor);
-    if (this.element === actor.element?.parentElement) {
-      this.platform.appendChild(actor.element);
-      actor.element.style.position = 'absolute';
+  protected override turnOff(): void {
+    this.actors.forEach(actor => {
+      actor.turnOff();
+
+      if (actor.element?.parentElement === this.platform) {
+        this.element.appendChild(actor.element);
+        actor.element?.style.removeProperty('position');
+      }
+    });
+
+    this.platform.parentNode!.removeChild(this.platform);
+
+    this.element.style.removeProperty('height');
+    this.element.style.removeProperty('position');
+    this.element.style.removeProperty('overflow');
+  }
+
+  protected placeActor(actor: Actor): void {
+    if (this.checkResolution()) {
+      if (this.element === actor.element?.parentElement) {
+        this.platform.appendChild(actor.element);
+        actor.element.style.position = 'absolute';
+      }
+      actor.initElement(this.elementY(), this);
     }
-    actor.initElement(this.elementY(), this);
   }
 
 }

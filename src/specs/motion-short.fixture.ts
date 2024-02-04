@@ -9,34 +9,34 @@ export abstract class MotionShortFixture extends MotionFixture {
       y: 0,
     }, {
       x: 0,
-      y: Util.castToInt(Util.innerHeight() / 2),
+      y: Util.castToInt(Util.viewportHeight() / 2),
     }, {
       x: 0,
-      y: Util.innerHeight(),
+      y: Util.viewportHeight(),
     }, {
       x: 0,
-      y: Util.innerHeight() + Util.castToInt(Util.innerHeight() / 2),
+      y: Util.viewportHeight() + Util.castToInt(Util.viewportHeight() / 2),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight(),
+      y: 2 * Util.viewportHeight(),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight() + Util.castToInt(Util.clientHeight() / 2),
+      y: 2 * Util.viewportHeight() + Util.castToInt(Util.clientHeight() / 2),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight() + Util.clientHeight(),
+      y: 2 * Util.viewportHeight() + Util.clientHeight(),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight() + Util.clientHeight() + Util.castToInt(Util.clientHeight() / 2),
+      y: 2 * Util.viewportHeight() + Util.clientHeight() + Util.castToInt(Util.clientHeight() / 2),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight() + 2 * Util.clientHeight(),
+      y: 2 * Util.viewportHeight() + 2 * Util.clientHeight(),
     }, {
       x: 0,
-      y: 2 * Util.innerHeight() + 2 * Util.clientHeight() + Util.castToInt(Util.innerHeight() / 2),
+      y: 2 * Util.viewportHeight() + 2 * Util.clientHeight() + Util.castToInt(Util.viewportHeight() / 2),
     }, {
       x: 0,
-      y: 3 * Util.innerHeight() + 2 * Util.clientHeight(),
+      y: 3 * Util.viewportHeight() + 2 * Util.clientHeight(),
     }];
   };
 

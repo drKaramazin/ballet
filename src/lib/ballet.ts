@@ -76,8 +76,7 @@ export class Ballet {
 
   resize(): void {
     if (this.isNeedResize()) {
-      this.scene.resizeHeight();
-      this.scene.redrawMeasuringGrid();
+      this.scene.resize();
       this.tick();
     }
   }
@@ -104,6 +103,7 @@ export class Ballet {
       if (this.resizeListener !== undefined) {
         window?.removeEventListener('resize', this.resizeListener);
       }
+      this.scene.turnOffScene();
     } else {
       throw new Error('Ballet hasn\'t yet been initialized');
     }

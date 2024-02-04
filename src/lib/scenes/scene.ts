@@ -4,10 +4,12 @@ import { MeasuringGrid } from '../measuring-grid';
 import { MeasuringGridModel } from '../models/measuring-grid.model';
 import { MotionParams } from '../models/motion-params.model';
 import { Wrapped } from '../decorators/wrapped';
+import { ResolutionModel } from '../models/resolution.model';
 
 export interface SceneOptions {
   offset?: (deviceWidth: number, deviceHeight: number, sceneHeight: number) => number;
   measuringGrid?: MeasuringGridModel;
+  checkResolution?: (resolution: ResolutionModel) => boolean;
 }
 
 export abstract class Scene<Options extends SceneOptions> {
@@ -15,9 +17,13 @@ export abstract class Scene<Options extends SceneOptions> {
   protected _actors: Actor[] = [];
   public abstract name: string;
 
-  protected abstract init(): void;
+  protected turnedOn = false;
+
+  protected abstract turnOn(): void;
+  protected abstract turnOff(): void;
   public abstract resizeHeight(): void;
   protected abstract platformHeight(deviceWidth: number, deviceHeight: number): number;
+  protected abstract placeActor(actor: Actor): void;
 
   protected grid: MeasuringGrid;
 
@@ -27,7 +33,7 @@ export abstract class Scene<Options extends SceneOptions> {
     protected options?: Options,
   ) {
     this.setDefaults();
-    this.init();
+    this.turnOnScene();
     this.resizeHeight();
     this.initMeasuringGrid();
     this.redrawMeasuringGrid();
@@ -43,6 +49,7 @@ export abstract class Scene<Options extends SceneOptions> {
   defaults(): SceneOptions {
     return {
       offset: () => 0,
+      checkResolution: () => true,
     };
   }
 
@@ -78,6 +85,11 @@ export abstract class Scene<Options extends SceneOptions> {
 
   add(actor: Actor): void {
     this._actors.push(actor);
+    this.placeActor(actor);
+  }
+
+  protected placeAllActors(): void {
+    this.actors.forEach(actor => this.placeActor(actor));
   }
 
   get actors(): Actor[] {
@@ -94,12 +106,44 @@ export abstract class Scene<Options extends SceneOptions> {
     }
   }
 
+  resize(): void {
+    if (this.checkResolution()) {
+      if (!this.turnedOn) {
+        this.turnOnScene();
+      }
+      this.resizeHeight();
+      this.redrawMeasuringGrid();
+    } else if (this.turnedOn) {
+      this.turnOffScene();
+    }
+  }
+
   afterRender: () => void;
   beforeRender: () => void;
   @Wrapped({ before: 'beforeRender', after: 'afterRender' })
   render(): void {
-    for (const actor of this.actors) {
-      actor.render(this.scrollPos(), this);
+    if (this.checkResolution()) {
+      for (const actor of this.actors) {
+        actor.render(this.scrollPos(), this);
+      }
+    }
+  }
+
+  checkResolution(): boolean {
+    return this.options!.checkResolution!({ viewportWidth: Util.viewportWidth(), viewportHeight: Util.viewportHeight() });
+  }
+
+  private turnOnScene(): void {
+    if (!this.turnedOn && this.checkResolution()) {
+      this.turnOn();
+      this.turnedOn = true;
+    }
+  }
+
+  turnOffScene(): void {
+    if (this.turnedOn) {
+      this.turnOff();
+      this.turnedOn = false;
     }
   }
 

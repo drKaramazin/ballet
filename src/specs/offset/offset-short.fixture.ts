@@ -18,25 +18,25 @@ export class OffsetShortFixture extends MotionShortFixture {
         scrollTo: this.stages()[0],
         coords: {
           x: { value: 0 },
-          y: { value: 2 * Util.innerHeight() },
+          y: { value: 2 * Util.viewportHeight() },
         },
       }, {
         scrollTo: this.stages()[1],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() + Util.innerHeight() / 2, margin: 1 },
+          y: { value: Util.viewportHeight() + Util.viewportHeight() / 2, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[2],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() },
+          y: { value: Util.viewportHeight() },
         },
       }, {
         scrollTo: this.stages()[3],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() / 2, margin: 1 },
+          y: { value: Util.viewportHeight() / 2, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[4],
@@ -72,13 +72,13 @@ export class OffsetShortFixture extends MotionShortFixture {
         scrollTo: this.stages()[9],
         coords: {
           x: { value: Util.clientWidth() - MoveFixture.block.width },
-          y: { value: -Util.clientHeight() - Util.innerHeight() / 2, margin: 1 },
+          y: { value: -Util.clientHeight() - Util.viewportHeight() / 2, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[10],
         coords: {
           x: { value: Util.clientWidth() - MoveFixture.block.width },
-          y: { value: -Util.clientHeight() - Util.innerHeight() },
+          y: { value: -Util.clientHeight() - Util.viewportHeight() },
         },
       }];
     },
@@ -96,25 +96,25 @@ export class OffsetShortFixture extends MotionShortFixture {
         scrollTo: this.stages()[0],
         coords: {
           x: { value: 0 },
-          y: { value: 2 * Util.innerHeight() },
+          y: { value: 2 * Util.viewportHeight() },
         },
       }, {
         scrollTo: this.stages()[1],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() + Util.innerHeight() / 2, margin: 1 },
+          y: { value: Util.viewportHeight() + Util.viewportHeight() / 2, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[2],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() },
+          y: { value: Util.viewportHeight() },
         },
       }, {
         scrollTo: this.stages()[3],
         coords: {
           x: { value: 0 },
-          y: { value: Util.innerHeight() / 2, margin: 1 },
+          y: { value: Util.viewportHeight() / 2, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[4],
@@ -150,13 +150,13 @@ export class OffsetShortFixture extends MotionShortFixture {
         scrollTo: this.stages()[9],
         coords: {
           x: { value: 0 },
-          y: { value: -(Util.innerHeight() / 2) - MoveFixture.block.height, margin: 1 },
+          y: { value: -(Util.viewportHeight() / 2) - MoveFixture.block.height, margin: 1 },
         },
       }, {
         scrollTo: this.stages()[10],
         coords: {
           x: { value: 0 },
-          y: { value: -Util.innerHeight() - MoveFixture.block.height },
+          y: { value: -Util.viewportHeight() - MoveFixture.block.height },
         },
       }];
     },

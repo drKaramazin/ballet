@@ -62,4 +62,9 @@ export class SizeMotion extends FramedMotion {
     this.setHeight(params, height);
   }
 
+  turnOff(element: HTMLElement): void {
+    element.style.removeProperty('width');
+    element.style.removeProperty('height');
+  }
+
 }

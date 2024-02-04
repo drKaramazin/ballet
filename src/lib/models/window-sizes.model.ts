@@ -1,7 +1,7 @@
 export interface WindowSizesModel {
   clientWidth: number;
   clientHeight: number;
-  innerWidth: number;
-  innerHeight: number;
+  viewportWidth: number;
+  viewportHeight: number;
   documentHeight: number;
 }

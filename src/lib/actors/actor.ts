@@ -48,4 +48,12 @@ export abstract class Actor {
     this.afterBindElement();
   }
 
+  turnOff(): void {
+    this.frames.forEach(frame => {
+      if (this.element) {
+        frame.motion.turnOff(this.element);
+      }
+    });
+  }
+
 }
