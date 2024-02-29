@@ -18,10 +18,17 @@ export class Ballet {
   private clientWidth: number;
   private clientHeight: number;
 
+  protected scenes: Array<Scene<SceneOptions>>;
+
   constructor(
-    public scene: Scene<SceneOptions>,
+    scene: Array<Scene<SceneOptions>> | Scene<SceneOptions>,
     protected options?: BalletOptions,
   ) {
+    if (Array.isArray(scene)) {
+      this.scenes = scene;
+    } else {
+      this.scenes = [scene];
+    }
     this.setDefaults();
     this.saveDisplaySize();
     this.init();
@@ -76,7 +83,7 @@ export class Ballet {
 
   resize(): void {
     if (this.isNeedResize()) {
-      this.scene.resize();
+      this.scenes.forEach(scene => scene.resize());
       this.tick();
     }
   }
@@ -103,7 +110,7 @@ export class Ballet {
       if (this.resizeListener !== undefined) {
         window?.removeEventListener('resize', this.resizeListener);
       }
-      this.scene.turnOffScene();
+      this.scenes.forEach(scene => scene.turnOffScene());
     } else {
       throw new Error('Ballet hasn\'t yet been initialized');
     }
@@ -113,7 +120,7 @@ export class Ballet {
   beforeRender: () => void;
   @Wrapped({ before: 'beforeRender', after: 'afterRender' })
   render(): void {
-    this.scene.render();
+    this.scenes.forEach(scene => scene.render());
   }
 
   static version(): string {
