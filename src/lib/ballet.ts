@@ -1,6 +1,7 @@
 import { Util } from './util';
 import { Scene, SceneOptions } from './scenes/scene';
-import { Wrapped } from './decorators/wrapped';
+import { Wrapped } from './decorators/wrapped.decorator';
+import { Once } from './decorators/once.decorator';
 
 declare const VERSION: string;
 
@@ -35,6 +36,7 @@ export class Ballet {
     this.tick();
   }
 
+  @Once()
   protected setDefaults(): void {
     this.options = {
       ...this.defaults(),
@@ -88,6 +90,7 @@ export class Ballet {
     }
   }
 
+  @Once()
   private init(): void {
     if (!this.initialized) {
       this.initialized = true;

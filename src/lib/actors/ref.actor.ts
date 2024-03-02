@@ -1,12 +1,7 @@
 import { InitiableActor } from './initiable.actor';
+import { ActorOptions } from './actor';
 
-export class RefActor extends InitiableActor {
-
-  constructor(
-    public override element: HTMLElement | undefined,
-  ) {
-    super();
-  }
+export class RefActor extends InitiableActor<ActorOptions> {
 
   override bindElement(): HTMLElement | undefined {
     return this.element;

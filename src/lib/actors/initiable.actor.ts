@@ -6,7 +6,7 @@ import { OpacityMotion } from '../motions/opacity.motion';
 import { Value } from '../models/value.model';
 import { Scene } from '../scenes/scene';
 
-export abstract class InitiableActor extends Actor {
+export abstract class InitiableActor<Options extends {}> extends Actor<Options> {
 
   findFirstFrame(motionName: string): TimeFrame | undefined {
     return this.frames.reduce(

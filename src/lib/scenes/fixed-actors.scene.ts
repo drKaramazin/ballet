@@ -32,7 +32,7 @@ export class FixedActorsScene extends Scene<SceneOptions> {
     this.element.style.removeProperty('position');
   }
 
-  protected placeActor(actor: Actor): void {
+  protected placeActor(actor: Actor<any>): void {
     if (this.checkResolution()) {
       actor.element!.style.position = 'fixed';
       actor.initElement(this.elementY(), this);

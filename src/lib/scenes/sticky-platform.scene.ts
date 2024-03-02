@@ -67,7 +67,7 @@ export class StickyPlatformScene extends Scene<StickyPlatformSceneOptions> {
     this.element.style.removeProperty('overflow');
   }
 
-  protected placeActor(actor: Actor): void {
+  protected placeActor(actor: Actor<any>): void {
     if (this.checkResolution()) {
       if (this.element === actor.element?.parentElement) {
         this.platform.appendChild(actor.element);

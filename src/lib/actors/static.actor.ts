@@ -2,20 +2,22 @@ import { InitiableActor } from './initiable.actor';
 import { Util } from '../util';
 import { MoveMotion } from '../motions/move.motion';
 import { Scene } from '../scenes/scene';
+import { ActorOptions } from './actor';
+import { ElementRecognition } from '../models/element-recognition';
 
-export interface StaticActorOptions {
+export interface StaticActorOptions extends ActorOptions {
   initPosition?: boolean;
   initSize?: boolean;
   initOpacity?: boolean;
 }
 
-export class StaticActor extends InitiableActor {
+export class StaticActor extends InitiableActor<StaticActorOptions> {
 
   constructor(
-    public override element: HTMLElement | undefined,
-    public options?: StaticActorOptions,
+    element: ElementRecognition,
+    options?: StaticActorOptions,
   ) {
-    super();
+    super(element, options);
     this.options = {
       initPosition: true,
       initSize: true,

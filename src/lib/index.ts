@@ -26,3 +26,8 @@ export { MeasuringGridModel } from './models/measuring-grid.model';
 
 export { WindowSizesModel } from './models/window-sizes.model';
 export { ResolutionModel } from './models/resolution.model';
+
+export { ballet } from './factories/ballet.factory';
+export { scene } from './factories/scene.factory';
+export { actor } from './factories/actor.factory';
+export { timeFrame } from './factories/time-frame.factory';

@@ -1,12 +1,13 @@
 import { Motion } from './motions/motion';
 import { Util } from './util';
+import { Value } from './models/value.model';
 
 export class TimeFrame {
 
   constructor(
     public motion: Motion,
-    public start: (deviceWidth: number, deviceHeight: number) => number,
-    public end: (deviceWidth: number, deviceHeight: number) => number = start,
+    public start: Value,
+    public end: Value = start,
   ) {
     if (end === undefined) {
       this.end = start;

@@ -40,7 +40,7 @@ export interface ChangeStage {
 
 export class TestTools {
 
-  static testGoingStages(block: Actor, blockElement: HTMLElement, stages: ChangeStage[]): Promise<void> {
+  static testGoingStages(block: Actor<any>, blockElement: HTMLElement, stages: ChangeStage[]): Promise<void> {
     if (typeof window !== 'undefined' && (window as DocsSpecsGlobalEnv).skipTesting) {
       return Promise.resolve();
     }
