@@ -1,4 +1,4 @@
-import { Actor } from '../actors/actor';
+import { Actor, ActorOptions } from '../actors/actor';
 import { Util } from '../util';
 import { MeasuringGrid } from '../measuring-grid';
 import { MeasuringGridModel } from '../models/measuring-grid.model';
@@ -23,7 +23,7 @@ export abstract class Scene<Options extends SceneOptions> implements RootKlassGu
 
   protected element: HTMLElement;
 
-  protected _actors: Array<Actor<any>> = [];
+  protected _actors: Array<Actor<ActorOptions>> = [];
   public abstract name: string;
 
   protected turnedOn = false;
@@ -32,7 +32,7 @@ export abstract class Scene<Options extends SceneOptions> implements RootKlassGu
   protected abstract turnOff(): void;
   public abstract resizeHeight(): void;
   protected abstract platformHeight(deviceWidth: number, deviceHeight: number): number;
-  protected abstract placeActor(actor: Actor<any>): void;
+  protected abstract placeActor(actor: Actor<ActorOptions>): void;
 
   protected grid: MeasuringGrid;
 
@@ -100,7 +100,7 @@ export abstract class Scene<Options extends SceneOptions> implements RootKlassGu
     return this.height(Util.clientWidth(), Util.clientHeight());
   }
 
-  add(actors: Actor<any> | Array<Actor<any>>): void {
+  add(actors: Actor<ActorOptions> | Array<Actor<ActorOptions>>): void {
     if (Array.isArray(actors)) {
       actors.forEach(actor => {
         this._actors.push(actor);
@@ -116,7 +116,7 @@ export abstract class Scene<Options extends SceneOptions> implements RootKlassGu
     this.actors.forEach(actor => this.placeActor(actor));
   }
 
-  get actors(): Array<Actor<any>> {
+  get actors(): Array<Actor<ActorOptions>> {
     return this._actors;
   }
 

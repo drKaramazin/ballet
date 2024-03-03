@@ -1,4 +1,4 @@
-import { Actor } from '../lib/actors/actor';
+import { Actor, ActorOptions } from '../lib/actors/actor';
 import { TestStage } from './motion.fixture';
 import { DocsSpecsGlobalEnv } from './docs-specs-global-env';
 
@@ -40,7 +40,7 @@ export interface ChangeStage {
 
 export class TestTools {
 
-  static testGoingStages(block: Actor<any>, blockElement: HTMLElement, stages: ChangeStage[]): Promise<void> {
+  static testGoingStages(block: Actor<ActorOptions>, blockElement: HTMLElement, stages: ChangeStage[]): Promise<void> {
     if (typeof window !== 'undefined' && (window as DocsSpecsGlobalEnv).skipTesting) {
       return Promise.resolve();
     }

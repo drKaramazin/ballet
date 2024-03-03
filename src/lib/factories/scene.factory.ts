@@ -1,6 +1,6 @@
 import { ElementRecognition } from '../models/element-recognition';
 import { Scene, SceneOptions } from '../scenes/scene';
-import { Actor } from '../actors/actor';
+import { Actor, ActorOptions } from '../actors/actor';
 import { StickyPlatformScene } from '../scenes/sticky-platform.scene';
 import { FixedActorsScene } from '../scenes/fixed-actors.scene';
 import { actor, ActorFactoryParams } from './actor.factory';
@@ -14,13 +14,13 @@ export interface SceneFactoryParams {
   height: Value;
   options?: SceneOptions;
   type?: SceneType;
-  actors?: Actor<any> | ActorFactoryParams | Array<Actor<any> | ActorFactoryParams>;
+  actors?: ActorFactoryParams | Array<ActorFactoryParams | Actor<ActorOptions>> | Actor<ActorOptions>;
 }
 
-function prepareActor(actors: Array<Actor<any> | ActorFactoryParams>): Array<Actor<any>> {
+function prepareActor(actors: Array<ActorFactoryParams | Actor<ActorOptions>>): Array<Actor<ActorOptions>> {
   return actors.map(item => {
     if (KlassHelper.rootIs(item, Klass.Actor)) {
-      return item as Actor<any>;
+      return item as Actor<ActorOptions>;
     }
     return actor(item as ActorFactoryParams);
   });

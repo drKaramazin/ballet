@@ -1,5 +1,5 @@
 import { TimeFrame } from '../time-frame';
-import { Scene } from '../scenes/scene';
+import { Scene, SceneOptions } from '../scenes/scene';
 import { Wrapped } from '../decorators/wrapped.decorator';
 import { RenderingActorStrategy } from '../strategies/rendering-actor.strategy';
 import { Util } from '../util';
@@ -32,12 +32,12 @@ export class Actor<Options extends ActorOptions> implements RootKlassGuard {
     this.element = ElementHelper.init(element);
   }
 
-  bindElement(scrollPosOnScene: number, scene: Scene<any>): void {}
+  bindElement(scrollPosOnScene: number, scene: Scene<SceneOptions>): void {}
 
   beforeRender: () => void;
   afterRender: () => void;
   @Wrapped({ before: 'beforeRender', after: 'afterRender' })
-  render(scrollPosOnScene: number, scene: Scene<any>): void {
+  render(scrollPosOnScene: number, scene: Scene<SceneOptions>): void {
     if (this.element) {
       const frames = this.renderActorStrategy.takeRenderFrame(scrollPosOnScene);
       frames.forEach(frame => frame.motion.make(Util.prepareMotionParams(
@@ -76,7 +76,7 @@ export class Actor<Options extends ActorOptions> implements RootKlassGuard {
 
   afterBindElement(): void {}
   @Wrapped({ after: 'afterBindElement' })
-  initElement(scrollPosOnScene: number, scene: Scene<any>): void {
+  initElement(scrollPosOnScene: number, scene: Scene<SceneOptions>): void {
     this.bindElement(scrollPosOnScene, scene);
     this.afterBindElement();
   }
