@@ -1,11 +1,10 @@
 import { ElementRecognition } from '../models/element-recognition';
-import { ActorOptions } from '../actors/actor';
+import { Actor, ActorOptions } from '../actors/actor';
 import { TimeFrame } from '../time-frame';
-import { StaticActor } from '../actors/static.actor';
-import { RefActor } from '../actors/ref.actor';
 import { timeFrame, TimeFrameFactoryParams } from './time-frame.factory';
+import { Klass } from '../models/rootKlassGuard';
+import { KlassHelper } from '../helpers/klass.helper';
 
-export type ActorType = 'ref-actor' | 'static-actor';
 export interface ActorFactoryParams {
   element: ElementRecognition;
   options?: ActorOptions;
@@ -13,27 +12,18 @@ export interface ActorFactoryParams {
 }
 
 function prepareTimeFrame(frames: Array<TimeFrame | TimeFrameFactoryParams>): TimeFrame[] {
-  return frames.map(frame => {
-    if (frame instanceof TimeFrame) {
-      return frame;
+  return frames.reduce((acc: TimeFrame[], frame: TimeFrame | TimeFrameFactoryParams) => {
+    if (KlassHelper.rootIs(frame, Klass.TimeFrame)) {
+      return [...acc, frame] as TimeFrame[];
     }
-    return timeFrame(frame)[0];
-  });
+    return [...acc, ...timeFrame(frame)];
+  }, []);
 }
 
-export function actor(params: ActorFactoryParams, type?: ActorType): StaticActor | RefActor {
-  const at = !type || type === 'static-actor' ? (
-    new StaticActor(params.element, params.options)
-  ) : (
-    type === 'ref-actor' ? (
-      new RefActor(params.element, params.options)
-    ) : undefined
-  );
-  if (!at) {
-    throw new Error('There is no this type of actor');
-  }
+export function actor(params: ActorFactoryParams): Actor<ActorOptions> {
+  const at = new Actor(params.element, params.options);
   if (params.frames) {
-    at.addFrame(prepareTimeFrame(Array.isArray(params.frames) ? params.frames : [params.frames]));
+    at.add(prepareTimeFrame(Array.isArray(params.frames) ? params.frames : [params.frames]));
   }
 
   return at;

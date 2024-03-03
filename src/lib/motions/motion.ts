@@ -1,6 +1,9 @@
 import { MotionParams } from '../models/motion-params.model';
+import { Klass, RootKlassGuard } from '../models/rootKlassGuard';
 
-export abstract class Motion {
+export abstract class Motion implements RootKlassGuard {
+
+  rootKlass = Klass.Motion;
 
   protected abstract readonly name: string;
 

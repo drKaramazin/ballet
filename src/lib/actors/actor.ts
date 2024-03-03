@@ -6,19 +6,19 @@ import { Util } from '../util';
 import { ElementRecognition } from '../models/element-recognition';
 import { Once } from '../decorators/once.decorator';
 import { ElementHelper } from '../helpers/element.helper';
+import { Klass, RootKlassGuard } from '../models/rootKlassGuard';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ActorOptions {}
 
-export abstract class Actor<Options extends ActorOptions> {
+export class Actor<Options extends ActorOptions> implements RootKlassGuard {
+
+  rootKlass = Klass.Actor;
 
   public element?: HTMLElement;
-
-  abstract bindElement(scrollPosOnFrame: number, scene: Scene<any>): HTMLElement | undefined;
-
   protected frames: TimeFrame[] = [];
 
-  abstract findFirstMoveMotionFrame(): TimeFrame;
+  renderActorStrategy = new RenderingActorStrategy();
 
   constructor(
     element: ElementRecognition,
@@ -32,9 +32,7 @@ export abstract class Actor<Options extends ActorOptions> {
     this.element = ElementHelper.init(element);
   }
 
-  afterBindElement(): void {}
-
-  renderActorStrategy = new RenderingActorStrategy();
+  bindElement(scrollPosOnScene: number, scene: Scene<any>): void {}
 
   beforeRender: () => void;
   afterRender: () => void;
@@ -53,7 +51,7 @@ export abstract class Actor<Options extends ActorOptions> {
     }
   }
 
-  addFrame(frame: TimeFrame | TimeFrame[]): void {
+  add(frame: TimeFrame | TimeFrame[]): void {
     if (Array.isArray(frame)) {
       this.frames = this.frames.concat(frame);
     } else {
@@ -65,12 +63,21 @@ export abstract class Actor<Options extends ActorOptions> {
   /**
    * @deprecated since version 0.0.4
    */
-  addFrames(frames: TimeFrame[]): void {
-    this.addFrame(frames);
+  addFrame(frame: TimeFrame | TimeFrame[]): void {
+    this.add(frame);
   }
 
+  /**
+   * @deprecated since version 0.0.4
+   */
+  addFrames(frames: TimeFrame[]): void {
+    this.add(frames);
+  }
+
+  afterBindElement(): void {}
+  @Wrapped({ after: 'afterBindElement' })
   initElement(scrollPosOnScene: number, scene: Scene<any>): void {
-    this.element = this.bindElement(scrollPosOnScene, scene);
+    this.bindElement(scrollPosOnScene, scene);
     this.afterBindElement();
   }
 

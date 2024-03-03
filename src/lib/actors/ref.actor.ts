@@ -1,10 +1,6 @@
-import { InitiableActor } from './initiable.actor';
-import { ActorOptions } from './actor';
+import { Actor, ActorOptions } from './actor';
 
-export class RefActor extends InitiableActor<ActorOptions> {
-
-  override bindElement(): HTMLElement | undefined {
-    return this.element;
-  }
-
-}
+/**
+ * @deprecated since version 0.0.4
+ */
+export class RefActor extends Actor<ActorOptions> {}

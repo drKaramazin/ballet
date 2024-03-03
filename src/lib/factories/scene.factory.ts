@@ -4,6 +4,8 @@ import { Actor } from '../actors/actor';
 import { StickyPlatformScene } from '../scenes/sticky-platform.scene';
 import { FixedActorsScene } from '../scenes/fixed-actors.scene';
 import { actor, ActorFactoryParams } from './actor.factory';
+import { Klass } from '../models/rootKlassGuard';
+import { KlassHelper } from '../helpers/klass.helper';
 
 export type SceneType = 'sticky-platform' | 'fixed-actors';
 export interface SceneFactoryParams {
@@ -16,10 +18,10 @@ export interface SceneFactoryParams {
 
 function prepareActor(actors: Array<Actor<any> | ActorFactoryParams>): Array<Actor<any>> {
   return actors.map(item => {
-    if (item instanceof Actor) {
-      return item;
+    if (KlassHelper.rootIs(item, Klass.Actor)) {
+      return item as Actor<any>;
     }
-    return actor(item);
+    return actor(item as ActorFactoryParams);
   });
 }
 

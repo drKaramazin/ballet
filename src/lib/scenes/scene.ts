@@ -8,6 +8,7 @@ import { ResolutionModel } from '../models/resolution.model';
 import { Once } from '../decorators/once.decorator';
 import { ElementHelper } from '../helpers/element.helper';
 import { ElementRecognition } from '../models/element-recognition';
+import { Klass, RootKlassGuard } from '../models/rootKlassGuard';
 
 export interface SceneOptions {
   offset?: (deviceWidth: number, deviceHeight: number, sceneHeight: number) => number;
@@ -15,7 +16,9 @@ export interface SceneOptions {
   checkResolution?: (resolution: ResolutionModel) => boolean;
 }
 
-export abstract class Scene<Options extends SceneOptions> {
+export abstract class Scene<Options extends SceneOptions> implements RootKlassGuard {
+
+  rootKlass = Klass.Scene;
 
   protected element: HTMLElement;
 
@@ -80,12 +83,12 @@ export abstract class Scene<Options extends SceneOptions> {
     }
   }
 
-  elementY(): number {
-    return this.element.getBoundingClientRect().y;
-  }
-
   platformHeightValue(): number {
     return this.platformHeight(Util.clientWidth(), Util.clientHeight());
+  }
+
+  elementY(): number {
+    return this.element.getBoundingClientRect().y;
   }
 
   scrollPos(): number {

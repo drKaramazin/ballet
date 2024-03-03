@@ -2,6 +2,7 @@ import { Util } from './util';
 import { Scene, SceneOptions } from './scenes/scene';
 import { Wrapped } from './decorators/wrapped.decorator';
 import { Once } from './decorators/once.decorator';
+import { Klass, RootKlassGuard } from './models/rootKlassGuard';
 
 declare const VERSION: string;
 
@@ -9,7 +10,9 @@ export interface BalletOptions {
   optimizeResizing: boolean;
 }
 
-export class Ballet {
+export class Ballet implements RootKlassGuard {
+
+  rootKlass = Klass.Lib;
 
   private initialized = false;
   private ticking = false;

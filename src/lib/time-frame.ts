@@ -1,8 +1,11 @@
 import { Motion } from './motions/motion';
 import { Util } from './util';
 import { Value } from './models/value.model';
+import { Klass, RootKlassGuard } from './models/rootKlassGuard';
 
-export class TimeFrame {
+export class TimeFrame implements RootKlassGuard {
+
+  rootKlass = Klass.TimeFrame;
 
   constructor(
     public motion: Motion,
