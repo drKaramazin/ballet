@@ -2,10 +2,12 @@ import { Value } from '../models/value.model';
 import { Util } from '../util';
 import { MotionParams } from '../models/motion-params.model';
 import { FramedMotion } from './framed-motion';
+import { ValueHelper } from '../helpers/value.helper';
+import { NumOrFn } from '../models/num-or-fn';
 
 export interface IOpacityMotion {
-  start: Value;
-  end: Value;
+  start: NumOrFn;
+  end: NumOrFn;
 }
 
 export class OpacityMotion extends FramedMotion {
@@ -18,8 +20,8 @@ export class OpacityMotion extends FramedMotion {
   constructor(data: IOpacityMotion) {
     super();
 
-    this.start = data.start;
-    this.end = data.end;
+    this.start = ValueHelper.prepare(data.start);
+    this.end = ValueHelper.prepare(data.end);
   }
 
   protected setOpacity(params: MotionParams, opacity: number): void {

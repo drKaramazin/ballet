@@ -1,15 +1,15 @@
-import { Value } from '../models/value.model';
 import { TimeFrame } from '../time-frame';
 import { IMoveMotion, MoveMotion } from '../motions/move.motion';
 import { ISizeMotion, SizeMotion } from '../motions/size.motion';
 import { IOpacityMotion, OpacityMotion } from '../motions/opacity.motion';
+import { NumOrFn } from '../models/num-or-fn';
 
 export interface TimeFrameFactoryParams {
   move?: IMoveMotion;
   size?: ISizeMotion;
   opacity?: IOpacityMotion;
-  start: Value;
-  end?: Value;
+  start?: NumOrFn;
+  end?: NumOrFn;
 }
 
 export function timeFrame(params: TimeFrameFactoryParams): TimeFrame[] {

@@ -2,12 +2,14 @@ import { Value } from '../models/value.model';
 import { Util } from '../util';
 import { MotionParams } from '../models/motion-params.model';
 import { FramedMotion } from './framed-motion';
+import { ValueHelper } from '../helpers/value.helper';
+import { NumOrFn } from '../models/num-or-fn';
 
 export interface ISizeMotion {
-  startWidth: Value;
-  endWidth: Value;
-  startHeight: Value;
-  endHeight: Value;
+  startWidth: NumOrFn;
+  endWidth: NumOrFn;
+  startHeight: NumOrFn;
+  endHeight: NumOrFn;
 }
 
 export class SizeMotion extends FramedMotion {
@@ -22,10 +24,10 @@ export class SizeMotion extends FramedMotion {
   constructor(data: ISizeMotion) {
     super();
 
-    this.startWidth = data.startWidth;
-    this.endWidth = data.endWidth;
-    this.startHeight = data.startHeight;
-    this.endHeight = data.endHeight;
+    this.startWidth = ValueHelper.prepare(data.startWidth);
+    this.endWidth = ValueHelper.prepare(data.endWidth);
+    this.startHeight = ValueHelper.prepare(data.startHeight);
+    this.endHeight = ValueHelper.prepare(data.endHeight);
   }
 
   protected setWidth(params: MotionParams, width: number): void {

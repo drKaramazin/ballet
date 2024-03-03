@@ -2,22 +2,26 @@ import { Motion } from './motions/motion';
 import { Util } from './util';
 import { Value } from './models/value.model';
 import { Klass, RootKlassGuard } from './models/rootKlassGuard';
+import { ValueHelper } from './helpers/value.helper';
+import { NumOrFn } from './models/num-or-fn';
 
 export class TimeFrame implements RootKlassGuard {
 
   rootKlass = Klass.TimeFrame;
 
+  public start: Value;
+  public end: Value;
+
   constructor(
     public motion: Motion,
-    public start: Value,
-    public end: Value = start,
+    start?: NumOrFn,
+    end?: NumOrFn,
   ) {
-    if (end === undefined) {
-      this.end = start;
-    } else {
-      if (this.getStartPos() > this.getEndPos()) {
-        throw new SyntaxError('"Start" later than "End" in the frame');
-      }
+    this.start = start === undefined ? ValueHelper.prepare(0) : ValueHelper.prepare(start);
+    this.end = end === undefined ? this.end = this.start : this.end = ValueHelper.prepare(end);
+
+    if (this.getStartPos() > this.getEndPos()) {
+      throw new SyntaxError('"Start" later than "End" in the frame');
     }
   }
 
