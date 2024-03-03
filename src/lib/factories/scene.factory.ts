@@ -6,11 +6,12 @@ import { FixedActorsScene } from '../scenes/fixed-actors.scene';
 import { actor, ActorFactoryParams } from './actor.factory';
 import { Klass } from '../models/rootKlassGuard';
 import { KlassHelper } from '../helpers/klass.helper';
+import { Value } from '../models/value.model';
 
 export type SceneType = 'sticky-platform' | 'fixed-actors';
 export interface SceneFactoryParams {
   element: ElementRecognition;
-  height: (deviceWidth: number, deviceHeight: number) => number;
+  height: Value;
   options?: SceneOptions;
   type?: SceneType;
   actors?: Actor<any> | ActorFactoryParams | Array<Actor<any> | ActorFactoryParams>;

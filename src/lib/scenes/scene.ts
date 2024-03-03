@@ -9,6 +9,7 @@ import { Once } from '../decorators/once.decorator';
 import { ElementHelper } from '../helpers/element.helper';
 import { ElementRecognition } from '../models/element-recognition';
 import { Klass, RootKlassGuard } from '../models/rootKlassGuard';
+import { Value } from '../models/value.model';
 
 export interface SceneOptions {
   offset?: (deviceWidth: number, deviceHeight: number, sceneHeight: number) => number;
@@ -37,7 +38,7 @@ export abstract class Scene<Options extends SceneOptions> implements RootKlassGu
 
   constructor(
     element: ElementRecognition,
-    protected height: (deviceWidth: number, deviceHeight: number) => number,
+    protected height: Value,
     protected options?: Options,
   ) {
     this.recognizeElement(element);

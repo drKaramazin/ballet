@@ -1,9 +1,10 @@
 import { Actor } from '../actors/actor';
 import { Util } from '../util';
 import { Scene, SceneOptions } from './scene';
+import { Value } from '../models/value.model';
 
 export interface StickyPlatformSceneOptions extends SceneOptions {
-  stickyPlatformHeight?: (deviceWidth: number, deviceHeight: number) => number;
+  stickyPlatformHeight?: Value;
 }
 
 export class StickyPlatformScene extends Scene<StickyPlatformSceneOptions> {
