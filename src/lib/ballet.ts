@@ -1,6 +1,8 @@
 import { Util } from './util';
 import { Scene, SceneOptions } from './scenes/scene';
-import { Wrapped } from './decorators/wrapped';
+import { Wrapped } from './decorators/wrapped.decorator';
+import { Once } from './decorators/once.decorator';
+import { Klass, RootKlassGuard } from './models/rootKlassGuard';
 
 declare const VERSION: string;
 
@@ -8,7 +10,9 @@ export interface BalletOptions {
   optimizeResizing: boolean;
 }
 
-export class Ballet {
+export class Ballet implements RootKlassGuard {
+
+  rootKlass = Klass.Lib;
 
   private initialized = false;
   private ticking = false;
@@ -18,16 +22,24 @@ export class Ballet {
   private clientWidth: number;
   private clientHeight: number;
 
+  protected scenes: Array<Scene<SceneOptions>>;
+
   constructor(
-    public scene: Scene<SceneOptions>,
+    scene: Array<Scene<SceneOptions>> | Scene<SceneOptions>,
     protected options?: BalletOptions,
   ) {
+    if (Array.isArray(scene)) {
+      this.scenes = scene;
+    } else {
+      this.scenes = [scene];
+    }
     this.setDefaults();
     this.saveDisplaySize();
     this.init();
     this.tick();
   }
 
+  @Once()
   protected setDefaults(): void {
     this.options = {
       ...this.defaults(),
@@ -76,11 +88,12 @@ export class Ballet {
 
   resize(): void {
     if (this.isNeedResize()) {
-      this.scene.resize();
+      this.scenes.forEach(scene => scene.resize());
       this.tick();
     }
   }
 
+  @Once()
   private init(): void {
     if (!this.initialized) {
       this.initialized = true;
@@ -103,7 +116,7 @@ export class Ballet {
       if (this.resizeListener !== undefined) {
         window?.removeEventListener('resize', this.resizeListener);
       }
-      this.scene.turnOffScene();
+      this.scenes.forEach(scene => scene.turnOffScene());
     } else {
       throw new Error('Ballet hasn\'t yet been initialized');
     }
@@ -113,7 +126,7 @@ export class Ballet {
   beforeRender: () => void;
   @Wrapped({ before: 'beforeRender', after: 'afterRender' })
   render(): void {
-    this.scene.render();
+    this.scenes.forEach(scene => scene.render());
   }
 
   static version(): string {

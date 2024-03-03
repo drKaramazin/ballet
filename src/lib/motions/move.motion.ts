@@ -2,12 +2,14 @@ import { Value } from '../models/value.model';
 import { Util } from '../util';
 import { MotionParams } from '../models/motion-params.model';
 import { FramedMotion } from './framed-motion';
+import { ValueHelper } from '../helpers/value.helper';
+import { NumOrFn } from '../models/num-or-fn';
 
 export interface IMoveMotion {
-  startX: Value;
-  endX: Value;
-  startY: Value;
-  endY: Value;
+  startX: NumOrFn;
+  endX: NumOrFn;
+  startY: NumOrFn;
+  endY: NumOrFn;
 }
 
 export class MoveMotion extends FramedMotion {
@@ -22,10 +24,10 @@ export class MoveMotion extends FramedMotion {
   constructor(data: IMoveMotion) {
     super();
 
-    this.startX = data.startX;
-    this.endX = data.endX;
-    this.startY = data.startY;
-    this.endY = data.endY;
+    this.startX = ValueHelper.prepare(data.startX);
+    this.endX = ValueHelper.prepare(data.endX);
+    this.startY = ValueHelper.prepare(data.startY);
+    this.endY = ValueHelper.prepare(data.endY);
   }
 
   protected setLeft(element: HTMLElement, left: number): void {

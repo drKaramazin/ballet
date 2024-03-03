@@ -1,10 +1,15 @@
-import { Actor } from '../actors/actor';
+import { Actor, ActorOptions } from '../actors/actor';
 import { Util } from '../util';
 import { MeasuringGrid } from '../measuring-grid';
 import { MeasuringGridModel } from '../models/measuring-grid.model';
 import { MotionParams } from '../models/motion-params.model';
-import { Wrapped } from '../decorators/wrapped';
+import { Wrapped } from '../decorators/wrapped.decorator';
 import { ResolutionModel } from '../models/resolution.model';
+import { Once } from '../decorators/once.decorator';
+import { ElementHelper } from '../helpers/element.helper';
+import { ElementRecognition } from '../models/element-recognition';
+import { Klass, RootKlassGuard } from '../models/rootKlassGuard';
+import { Value } from '../models/value.model';
 
 export interface SceneOptions {
   offset?: (deviceWidth: number, deviceHeight: number, sceneHeight: number) => number;
@@ -12,9 +17,13 @@ export interface SceneOptions {
   checkResolution?: (resolution: ResolutionModel) => boolean;
 }
 
-export abstract class Scene<Options extends SceneOptions> {
+export abstract class Scene<Options extends SceneOptions> implements RootKlassGuard {
 
-  protected _actors: Actor[] = [];
+  rootKlass = Klass.Scene;
+
+  protected element: HTMLElement;
+
+  protected _actors: Array<Actor<ActorOptions>> = [];
   public abstract name: string;
 
   protected turnedOn = false;
@@ -23,15 +32,16 @@ export abstract class Scene<Options extends SceneOptions> {
   protected abstract turnOff(): void;
   public abstract resizeHeight(): void;
   protected abstract platformHeight(deviceWidth: number, deviceHeight: number): number;
-  protected abstract placeActor(actor: Actor): void;
+  protected abstract placeActor(actor: Actor<ActorOptions>): void;
 
   protected grid: MeasuringGrid;
 
   constructor(
-    protected element: HTMLElement,
-    protected height: (deviceWidth: number, deviceHeight: number) => number,
+    element: ElementRecognition,
+    protected height: Value,
     protected options?: Options,
   ) {
+    this.recognizeElement(element);
     this.setDefaults();
     this.turnOnScene();
     this.resizeHeight();
@@ -39,6 +49,12 @@ export abstract class Scene<Options extends SceneOptions> {
     this.redrawMeasuringGrid();
   }
 
+  @Once()
+  private recognizeElement(element: ElementRecognition): void {
+    this.element = ElementHelper.init(element);
+  }
+
+  @Once()
   protected setDefaults(): void {
     this.options = {
       ...this.defaults(),
@@ -61,18 +77,19 @@ export abstract class Scene<Options extends SceneOptions> {
     );
   }
 
+  @Once()
   initMeasuringGrid(): void {
     if (this.options?.measuringGrid) {
       this.grid = new MeasuringGrid(this.element, this.options.measuringGrid);
     }
   }
 
-  elementY(): number {
-    return this.element.getBoundingClientRect().y;
-  }
-
   platformHeightValue(): number {
     return this.platformHeight(Util.clientWidth(), Util.clientHeight());
+  }
+
+  elementY(): number {
+    return this.element.getBoundingClientRect().y;
   }
 
   scrollPos(): number {
@@ -83,16 +100,23 @@ export abstract class Scene<Options extends SceneOptions> {
     return this.height(Util.clientWidth(), Util.clientHeight());
   }
 
-  add(actor: Actor): void {
-    this._actors.push(actor);
-    this.placeActor(actor);
+  add(actors: Actor<ActorOptions> | Array<Actor<ActorOptions>>): void {
+    if (Array.isArray(actors)) {
+      actors.forEach(actor => {
+        this._actors.push(actor);
+        this.placeActor(actor);
+      });
+    } else {
+      this._actors.push(actors);
+      this.placeActor(actors);
+    }
   }
 
   protected placeAllActors(): void {
     this.actors.forEach(actor => this.placeActor(actor));
   }
 
-  get actors(): Actor[] {
+  get actors(): Array<Actor<ActorOptions>> {
     return this._actors;
   }
 

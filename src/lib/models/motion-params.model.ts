@@ -1,5 +1,5 @@
 import { TimeFrame } from '../time-frame';
-import { Scene } from '../scenes/scene';
+import { Scene, SceneOptions } from '../scenes/scene';
 
 export interface MotionParams {
   scrollPosOnScene: number;
@@ -7,5 +7,5 @@ export interface MotionParams {
   delta: number;
   element: HTMLElement;
   frame: TimeFrame;
-  scene: Scene<any>;
+  scene: Scene<SceneOptions>;
 }

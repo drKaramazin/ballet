@@ -1,4 +1,5 @@
 import { Color } from './color.model';
+import { Value } from './value.model';
 
 export interface MeasuringSubgrid {
   width?: (gridWidth: number) => number;
@@ -8,7 +9,7 @@ export interface MeasuringSubgrid {
 }
 
 export interface MeasuringGridModel {
-  width?: (deviceWidth: number, deviceHeight: number) => number;
+  width?: Value;
   height?: (deviceWidth: number, deviceHeight: number, sceneHeight: number) => number;
   color: Color;
   subgrid?: MeasuringSubgrid;

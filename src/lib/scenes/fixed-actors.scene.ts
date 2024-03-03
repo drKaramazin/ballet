@@ -1,4 +1,4 @@
-import { Actor } from '../actors/actor';
+import { Actor, ActorOptions } from '../actors/actor';
 import { Util } from '../util';
 import { Scene, SceneOptions } from './scene';
 import { MotionParams } from '../models/motion-params.model';
@@ -32,7 +32,7 @@ export class FixedActorsScene extends Scene<SceneOptions> {
     this.element.style.removeProperty('position');
   }
 
-  protected placeActor(actor: Actor): void {
+  protected placeActor(actor: Actor<ActorOptions>): void {
     if (this.checkResolution()) {
       actor.element!.style.position = 'fixed';
       actor.initElement(this.elementY(), this);
